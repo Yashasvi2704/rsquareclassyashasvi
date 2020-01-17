@@ -1,0 +1,90 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+Dashboard | RsquareClass
+{% endblock %}
+
+{% block top-includes %}
+<link href="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/datatables/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet" />
+<link href="{% static 'assets/plugins/sweet-alert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+
+<!-- Start content -->
+<div class="content">
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title">Settings</h4>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Agroxa</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0);">Settings</a></li>
+                    </ol>
+                    
+                    <div class="state-information d-none d-sm-block">
+                        <div class="state-graph">
+                            <div id="header-chart-1"></div>
+                            <div class="info">Balance $ 2,317</div>
+                        </div>
+                        <div class="state-graph">
+                            <div id="header-chart-2"></div>
+                            <div class="info">Item Sold 1230</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+        
+        <div class="page-content-wrapper">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card m-b-20">
+                        <div class="card-body">
+                            <h4 class="card-title font-16 mt-0 mb-3" style="display: flex; justify-content: space-between;">
+                                <div>Settings</div>
+                            </h4>
+                            <p class="card-subtitle font-14 mb-4 text-muted">
+                                Configure the settings here.
+                            </p>       
+                            <form id="settings-form" method="POST" action="{% url 'settings' %}">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <label for="dark-mode" class="col-sm-2 col-form-label">Dark Mode</label>
+                                    <input type="checkbox" id="dark-mode-switch" name="dark-mode-switch" switch="none" {% if request.session.dark %}checked{% endif %}/>
+                                    <label for="dark-mode-switch" data-on-label="on"
+                                    data-off-label="off"></label>
+                                </div>  
+                            </form>                                       
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->            
+        </div>
+        <!-- end page content-->
+        
+    </div>
+    
+</div> <!-- content -->
+
+
+{% endblock %}
+
+{% block bottom-includes %}
+
+{% endblock %}
+
+{% block script %}
+<script>
+$('#dark-mode-switch').on("change", function(){
+    $('form#settings-form').submit();
+})
+</script>
+{% endblock %}

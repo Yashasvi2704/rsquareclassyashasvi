@@ -1,0 +1,109 @@
+{%extends 'layout.html'%}
+
+{% load static %}
+{% block title %}
+Dashboard | RsquareClass
+{% endblock %}
+
+{%block content%}
+<div class="content">
+    <div class="container-fluid">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Batch List</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Agroxa</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0);">Batches</a></li>
+            </ol>
+
+            <div class="state-information d-none d-sm-block">
+                <div class="state-graph">
+                    <div id="header-chart-1"></div>
+                    <div class="info">Balance $ 2,317</div>
+                </div>
+                <div class="state-graph">
+                    <div id="header-chart-2"></div>
+                    <div class="info">Item Sold 1230</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<span class="float-right menu-arrow"><a href="{%url 'batch-add'%}" class="btn btn-secondary">Add Batch<i class="mdi mdi-plus"></i></a></span>
+
+{%for foo in batch%}
+<div class="col-sm-8">
+
+<div class="card">
+  <div class="card-header">
+    <span class="badge badge-pill badge-dark">{{foo.academic_year}}</span>
+    <span class="float-right menu-arrow"><a href="{% url 'batch-edit' foo.pk %}" data-toggle="tooltip" data-placement="top" title="Edit Batch" ><i class="mdi mdi-plus"></i></a></span>
+    <strong></strong>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{foo.batch_name}}
+
+
+    <span class="float-right menu-arrow"><button class="btn btn-secondary"data-toggle="modal" data-target="#modal{{foo.pk}}"  ><i class="mdi mdi-plus"></i>Quick View</button></span></h5>
+  </div>
+</div>
+</div>
+{%endfor%}
+
+{% for foo in batch %}
+<div class="modal fade" id="modal{{foo.pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+
+    <!--Content-->
+    <div class="modal-content">
+
+      <!--Body-->
+      <div class="modal-body mb-0 p-0">
+
+<div class="container-fluid">
+
+  <h5 class="card-title">Subjects Taught</h5>
+
+
+          {% for subject in bsubject%}
+          {% if subject.batch == foo%}
+
+          <div class="col-lg-4">
+          <span class="badge badge-pill badge-dark">{{subject.subject}}</span>
+
+          </div>
+          <br/>
+          {%endif%}
+          {%endfor%}
+
+
+  <h5 class="card-title">Staff</h5>
+
+
+</div>
+
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center flex-column flex-md-row">
+        <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4"
+          data-dismiss="modal">Close</button>
+
+
+      </div>
+
+    </div>
+    <!--/.Content-->
+
+  </div>
+</div>
+{%endfor%}
+
+</div>
+</div>
+
+
+
+{%endblock%}
